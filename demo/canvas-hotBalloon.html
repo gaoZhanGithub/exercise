@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>热气球</title>
+    <style type="text/css">
+        canvas {
+            background-color: #9fd5ea;
+        }
+
+    </style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<script type="text/javascript">
+window.requestAnimFrame = (function (callback) {
+    return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 1000 / 60);
+            };
+})();
+
+canvas = document.getElementById('canvas');
+ctx = canvas.getContext('2d');
+w = canvas.width = window.innerWidth;
+h = canvas.height = window.innerHeight;
+
+var particulas = newImprime = [];
+var Glober = function () {
+    this.colores = 'rgb(' +
+            parseInt(Math.random() * 104 + 104) + ',' +
+            parseInt(Math.random() * 139 + 139) + ',' +
+            parseInt(Math.random() * 111 + 111) + ')';
+    this.color = 'rgb(' +
+            parseInt(Math.random() * 255) + ',' +
+            parseInt(Math.random() * 255) + ',' +
+            parseInt(Math.random() * 255) + ')';
+    this.x = 75;
+    this.y = 50;
+    this.radius = 35;
+    this.vx = Math.random() * 6;
+    this.vy = Math.random() * 5;
+    this.init();
+}
+Glober.prototype.circulo = function () {
+    ctx.beginPath();
+    ctx.fillStyle = this.colores;
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+}
+Glober.prototype.cuadrox = 60;
+Glober.prototype.cuadroy = 100;
+Glober.prototype.cuadro = function () {
+
+    ctx.beginPath();
+    ctx.fillStyle = this.colores;
+    ctx.fillRect(this.cuadrox, this.cuadroy, 30, 30);
+    ctx.lineWidth = 1;
+
+
+    ctx.strokeStyle = this.color;
+    ctx.strokeRect(this.cuadrox, this.cuadroy, 30, 30);
+    ctx.stroke();
+}
+
+Glober.prototype.redondabajoax = 90;
+Glober.prototype.redondabajoby = 130;
+Glober.prototype.redondabajocx = 75;
+Glober.prototype.redondabajody = 140;
+Glober.prototype.redondabajoex = 60;
+Glober.prototype.redondabajofy = 130;
+Glober.prototype.redondabajo = function () {
+
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.lineTo(this.redondabajoax, this.redondabajoby);
+    ctx.quadraticCurveTo(this.redondabajocx, this.redondabajody, this.redondabajoex, this.redondabajofy);
+    ctx.fill();
+}
+
+Glober.prototype.lineasverticalax = 60;
+Glober.prototype.lineasverticalby = 110;
+Glober.prototype.lineasverticalcx = 90;
+Glober.prototype.lineasverticaldy = 110;
+Glober.prototype.lineasverticalex = 60;
+Glober.prototype.lineasverticalfy = 120;
+Glober.prototype.lineasverticalgx = 90;
+Glober.prototype.lineasverticalhy = 120;
+Glober.prototype.lineasvertical = function () {
+
+
+    ctx.beginPath();
+    ctx.moveTo(this.lineasverticalax, this.lineasverticalby);
+    ctx.lineTo(this.lineasverticalcx, this.lineasverticaldy);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(this.lineasverticalex, this.lineasverticalfy);
+    ctx.lineTo(this.lineasverticalgx, this.lineasverticalhy);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+}
+
+Glober.prototype.lineasHorizontalax = 70;
+Glober.prototype.lineasHorizontalby = 100;
+Glober.prototype.lineasHorizontalcx = 70;
+Glober.prototype.lineasHorizontaldy = 130;
+Glober.prototype.lineasHorizontalex = 80;
+Glober.prototype.lineasHorizontalfy = 100;
+Glober.prototype.lineasHorizontalgx = 80;
+Glober.prototype.lineasHorizontalhy = 130;
+Glober.prototype.lineasHorizontal = function () {
+
+    ctx.beginPath();
+    ctx.moveTo(this.lineasHorizontalax, this.lineasHorizontalby);
+    ctx.lineTo(this.lineasHorizontalcx, this.lineasHorizontaldy);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(this.lineasHorizontalex, this.lineasHorizontalfy);
+    ctx.lineTo(this.lineasHorizontalgx, this.lineasHorizontalhy);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+}
+
+Glober.prototype.decoracionGloboax = 74;
+Glober.prototype.decoracionGloboby = 14;
+Glober.prototype.decoracionGlobocx = 104;
+Glober.prototype.decoracionGlobody = 16;
+Glober.prototype.decoracionGloboex = 74;
+Glober.prototype.decoracionGlobofy = 85;
+Glober.prototype.decoracionGlobogx = 75;
+Glober.prototype.decoracionGlobohy = 13;
+Glober.prototype.decoracionGloboix = 35;
+Glober.prototype.decoracionGlobojy = 82;
+Glober.prototype.decoracionGlobokx = 75;
+Glober.prototype.decoracionGloboly = 86;
+Glober.prototype.decoracionGlobo = function () {
+
+
+    ctx.beginPath();
+    ctx.fillStyle = this.color;
+    ctx.lineTo(this.decoracionGloboax, this.decoracionGloboby);
+    ctx.quadraticCurveTo(this.decoracionGlobocx, this.decoracionGlobody, this.decoracionGloboex, this.decoracionGlobofy);
+    ctx.fill();
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.lineTo(this.decoracionGlobogx, this.decoracionGlobohy);
+    ctx.quadraticCurveTo(this.decoracionGloboix, this.decoracionGlobojy, this.decoracionGlobokx, this.decoracionGloboly);
+    ctx.fill();
+}
+
+Glober.prototype.cuerdasdelgloboax = 68;
+Glober.prototype.cuerdasdelgloboby = 80;
+Glober.prototype.cuerdasdelglobocx = 65;
+Glober.prototype.cuerdasdelglobody = 100;
+Glober.prototype.cuerdasdelgloboex = 82;
+Glober.prototype.cuerdasdelglobofy = 84;
+Glober.prototype.cuerdasdelglobogx = 85;
+Glober.prototype.cuerdasdelglobohy = 100;
+Glober.prototype.cuerdasdelglobo = function () {
+    ctx.beginPath();
+    ctx.moveTo(this.cuerdasdelgloboax, this.cuerdasdelgloboby);
+    ctx.lineTo(this.cuerdasdelglobocx, this.cuerdasdelglobody);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(this.cuerdasdelgloboex, this.cuerdasdelglobofy);
+    ctx.lineTo(this.cuerdasdelglobogx, this.cuerdasdelglobohy);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+}
+Glober.prototype.repisax = 55;
+Glober.prototype.repisby = 100;
+Glober.prototype.repiscx = 95;
+Glober.prototype.repisdy = 100;
+Glober.prototype.repis = function () {
+    ctx.beginPath();
+    ctx.moveTo(this.repisax, this.repisby);
+    ctx.lineTo(this.repiscx, this.repisdy);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+}
+
+Glober.prototype.letraax = 34;
+Glober.prototype.letraby = 44;
+Glober.prototype.letra = function () {
+    ctx.beginPath();
+    ctx.fillStyle = "white";
+    ctx.font = '10pt  "Arial"';
+    ctx.fillText('Verchitos.com', this.letraax, this.letraby);
+    ctx.lineWidth = 3;
+    ctx.fill();
+}
+
+Glober.prototype.init = function () {
+    this.circulo();
+    this.cuadro();
+    this.redondabajo();
+    this.lineasvertical();
+    this.lineasHorizontal();
+    this.decoracionGlobo();
+    this.cuerdasdelglobo();
+    this.repis();
+    this.letra();
+}
+function update() {
+    if (Math.random() < 0.09) {
+        var imprime = new Glober();
+        particulas.push(imprime);
+    }
+}
+function iniciar() {
+    requestAnimFrame(iniciar)
+    //清屏
+//    canvas.width = canvas.width;
+    ctx.fillRect(0, 0, w, h);
+    particulas.forEach(function (imprime, index) {
+
+
+        imprime.repisax += imprime.vx;
+        imprime.repisby += imprime.vy;
+        imprime.repiscx += imprime.vx;
+        imprime.repisdy += imprime.vy;
+
+        imprime.cuerdasdelgloboax += imprime.vx;
+        imprime.cuerdasdelgloboby += imprime.vy;
+        imprime.cuerdasdelglobocx += imprime.vx;
+        imprime.cuerdasdelglobody += imprime.vy;
+        imprime.cuerdasdelgloboex += imprime.vx;
+        imprime.cuerdasdelglobofy += imprime.vy;
+        imprime.cuerdasdelglobogx += imprime.vx;
+        imprime.cuerdasdelglobohy += imprime.vy;
+
+        imprime.decoracionGloboax += imprime.vx;
+        imprime.decoracionGloboby += imprime.vy;
+        imprime.decoracionGlobocx += imprime.vx;
+        imprime.decoracionGlobody += imprime.vy;
+        imprime.decoracionGloboex += imprime.vx;
+        imprime.decoracionGlobofy += imprime.vy;
+        imprime.decoracionGlobogx += imprime.vx;
+        imprime.decoracionGlobohy += imprime.vy;
+        imprime.decoracionGloboix += imprime.vx;
+        imprime.decoracionGlobojy += imprime.vy;
+        imprime.decoracionGlobokx += imprime.vx;
+        imprime.decoracionGloboly += imprime.vy;
+
+        imprime.lineasHorizontalax += imprime.vx;
+        imprime.lineasHorizontalby += imprime.vy;
+        imprime.lineasHorizontalcx += imprime.vx;
+        imprime.lineasHorizontaldy += imprime.vy;
+        imprime.lineasHorizontalex += imprime.vx;
+        imprime.lineasHorizontalfy += imprime.vy;
+        imprime.lineasHorizontalgx += imprime.vx;
+        imprime.lineasHorizontalhy += imprime.vy;
+
+        imprime.lineasverticalax += imprime.vx;
+        imprime.lineasverticalby += imprime.vy;
+        imprime.lineasverticalcx += imprime.vx;
+        imprime.lineasverticaldy += imprime.vy;
+        imprime.lineasverticalex += imprime.vx;
+        imprime.lineasverticalfy += imprime.vy;
+        imprime.lineasverticalgx += imprime.vx;
+        imprime.lineasverticalhy += imprime.vy;
+        imprime.redondabajoax += imprime.vx;
+        imprime.redondabajoby += imprime.vy;
+        imprime.redondabajocx += imprime.vx;
+        imprime.redondabajody += imprime.vy;
+        imprime.redondabajoex += imprime.vx;
+        imprime.redondabajofy += imprime.vy;
+        imprime.x += imprime.vx;
+        imprime.y += imprime.vy;
+        imprime.cuadrox += imprime.vx;
+        imprime.cuadroy += imprime.vy;
+
+        imprime.letraax += imprime.vx;
+        imprime.letraby += imprime.vy;
+
+
+        imprime.init();
+
+        //超过屏幕就删掉
+        if (imprime.x >= 200 || imprime.y >= 200) {
+            particulas.splice(index, 1);
+        }
+
+    });
+    update();
+}
+
+iniciar();
+
+
+//only one
+//var imprime = new Glober();
+//particulas.push(imprime)
+//iniciar();
+
+</script>
+</body>
+</html>

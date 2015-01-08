@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>clock</title>
+</head>
+<body>
+    <canvas class="clock" width="600" height="600"></canvas>
+    <img id="clock"/>
+    <div id="imgs">
+    </div>
+    <script src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+    <script src="canvasImage.js"></script>
+    <script type="text/javascript">
+        (function($){
+        var canvas=$(".clock")[0],
+            contex=canvas.getContext("2d"),
+            FONT_HEIGHT=15,
+            MARGIN=35,
+            HAND_TRUNCATTION=canvas.width/25,
+            HOUR_HAND_TRUNCATTION=canvas.width/10,
+            NUMBER_SPACING=20,
+            RADIUS=canvas.width/2-MARGIN,//半径
+            HAND_RADIUS=RADIUS+NUMBER_SPACING,
+            $imgs = document.getElementById('imgs');
+
+            function drawCircle(){
+            contex.beginPath();
+            contex.save();
+            contex.fillStyle="#000";
+            contex.arc(canvas.width/2,canvas.height/2,RADIUS,0,Math.PI*2);//圆心x坐标 y坐标 r半径 sAngle起始角度 eAngle结束角度 逆时针or顺时针
+            contex.fill();
+            contex.restore();
+
+            contex.beginPath();
+            contex.save();
+            contex.fillStyle="#fff";
+            contex.arc(canvas.width/2,canvas.height/2,RADIUS-10,0,Math.PI*2);//圆心x坐标 y坐标 r半径 sAngle起始角度 eAngle结束角度 逆时针or顺时针
+            contex.fill();
+            contex.restore();
+        }
+
+        function drawNumerals(){
+            var numerals =[1,2,3,4,5,6,7,8,9,10,11,12],
+                angle= 0,
+                numeralWidth=0;
+            numerals.forEach(function(item){
+                angle=Math.PI/6*(item-3);
+                Math.sin(angle);
+                numeralWidth=contex.measureText(item).width;
+                contex.fillText(item,canvas.width/2+Math.cos(angle)*100,canvas.height/2+Math.sin(angle)*100);
+            })
+        }
+
+        function drawCenter(){
+            contex.beginPath();
+            contex.arc(canvas.width/2,canvas.height/2,5,0,Math.PI*2,true);
+            contex.fill();
+            contex.closePath();
+        }
+
+        function drawHand(loc,isHour){
+            contex.beginPath();
+            var angle=Math.PI*2*(loc/60)-Math.PI/ 2,
+                handRadius=isHour?RADIUS-HAND_TRUNCATTION-HOUR_HAND_TRUNCATTION
+                                 :RADIUS-HAND_TRUNCATTION;
+            contex.moveTo(canvas.width/2,canvas.height/2);
+            contex.lineTo(canvas.width/2+Math.cos(angle)*handRadius,canvas.height/2+Math.sin(angle)*handRadius);
+            contex.stroke();
+            contex.closePath();
+
+        }
+
+        function drawHands(){
+            var date=new Date,
+                    hour=date.getHours();
+            hour=hour>12?hour-12:hour;
+            drawHand(hour*5+(date.getMinutes()/60)*5,true);
+            drawHand(date.getMinutes(),false);
+            drawHand(date.getSeconds(),false);
+        }
+
+        function drawClock(){
+            contex.clearRect(0,0,canvas.width,canvas.height);
+            drawCircle();
+            drawCenter();
+            drawNumerals();
+            drawHands();
+        }
+        contex.font=FONT_HEIGHT+"px Arial";
+        drawClock();
+
+            var retCanvas = document.createElement('canvas');
+            var retCtx = retCanvas.getContext('2d');
+            retCanvas.width = 300;
+            retCanvas.height = 300;
+            retCtx.drawImage(canvas,0,0,600,600,0,0,300,300);
+
+        var newClock=$("#clock")[0],
+            newClockData=retCanvas.toDataURL("jpg");
+
+            newClock.src=newClockData;
+
+
+        $imgs.appendChild(Canvas2Image.convertToImage(canvas, 300, 300, "jpg"));
+//        Canvas2Image.saveAsImage(canvas,600,600,"png");
+        })(jQuery);
+    </script>
+</body>
+</html>

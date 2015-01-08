@@ -1,0 +1,80 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>函数节流</title>
+    <style>
+        body,canvas{
+            margin:0;
+            padding:0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+    n=0;
+    function resizehandler(){
+        console.log(new Date().getTime());
+        console.log(++n);
+    }
+
+    function throttle(method,context){
+        clearTimeout(method.tId);
+        method.tId=setTimeout(function(){
+            method.call(context);
+        },500);
+    }
+
+    window.onresize=function(){
+        throttle(resizehandler,window);
+    };
+</script>
+<script type="text/javascript">
+//    n=0;
+//    function resizehandler(){
+//        console.log(new Date().getTime());
+//        console.log(++n);
+//    }
+//
+//    function throttle(method,delay){
+//        var timer=null;
+//        return function(){
+//            var context=this, args=arguments;
+//            clearTimeout(timer);
+//            timer=setTimeout(function(){
+//                method.apply(context,args);
+//            },delay);
+//        }
+//
+//    }
+
+//    window.onresize=throttle(resizehandler,500);//因为返回函数句柄，不用包装函数了
+</script>
+<script>
+     n=0;
+    function throttle(method,delay,duration){
+        var timer=null, begin=new Date();
+        return function(){
+            var context=this, args=arguments, current=new Date();
+            clearTimeout(timer);
+            if(current-begin>=duration){
+                console.log("k");
+                method.apply(context,args);
+                begin=current;
+            }else{
+                console.log("m");
+                timer=setTimeout(function(){
+                    method.apply(context,args);
+                },delay);
+            }
+        }
+    }
+    function resizehandler(){
+//        console.log(new Date().getTime());
+//        console.log(++n);
+    }
+    window.onresize=throttle(resizehandler,100,200);
+</script>
+</body>
+</html>

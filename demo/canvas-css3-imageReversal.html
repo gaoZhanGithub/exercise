@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>test</title>
+    <style type="text/css">
+        .filp-x{
+            filter:FlipH;
+            -moz-transform:matrix(-1,0,0,1,0,0);
+            -webkit-transform:matrix(-1,0,0,1,0,0);
+        }
+    </style>
+</head>
+<body>
+<p> css3 transform 矩阵翻转</p>
+<img src="image/flower.jpg" title="原图" />
+<img src="image/flower.jpg" title="水平翻转" class="filp-x"/>
+<p> canvas ImageData 像素顺序 </p>
+<img src="image/flower.jpg"/>
+<canvas id="cv"></canvas>
+<script>
+    var canvas = document.getElementById("cv"),
+        ctx = canvas.getContext("2d"),
+        img = new Image();
+    img.src = "image/flower.jpg";
+
+    //css3翻转
+    function show() {
+        // 正常图片
+        ctx.drawImage(img, 10, 10);
+
+        // 水平翻转
+        ctx.translate(300, 0);
+        ctx.scale(-1, 1);
+        // 下面画的图片是水平翻转的
+        ctx.drawImage(img, 300 - img.width - 10, 60);
+        // 恢复正常
+        ctx.translate(300, 0);
+        ctx.scale(-1, 1);
+
+        // 下面的图片是正常的
+        ctx.drawImage(img, 10, 110);
+    }
+
+    // 象素级水平翻转的方法
+    function show2() {
+        canvas.width=img.width;
+        canvas.height=img.height;
+
+        // 先画一个正常的画片
+        var px = 0,
+                py = 0;
+
+        ctx.drawImage(img, px, py);
+
+        // 取得这个图片的数据，图片与当前页面必须同域，否则会出错
+        var img_data = ctx.getImageData(px, py, img.width, img.height),
+
+                x, y, p, i, i2, t,
+                h = img_data.height;
+        w = img_data.width,
+                w_2 = w / 2;
+        // 将 img_data 的数据水平翻转
+        for (y = 0; y < h; y++) {
+            for (x = 0; x < w_2; x++) {
+                i = (y << 2) * w + (x << 2);
+                i2 = ((y + 1) << 2) * w - ((x + 1) << 2);
+                for (p = 0; p < 4; p++) {
+                    t = img_data.data[i + p];
+                    img_data.data[i + p] = img_data.data[i2 + p];
+                    img_data.data[i2 + p] = t;
+                }
+            }
+        }
+
+        // 重绘水平翻转后的图片
+        ctx.putImageData(img_data, px, py);
+    }
+
+    img.onload = function () {
+        show2();
+    };
+</script>
+</body>
+</html>

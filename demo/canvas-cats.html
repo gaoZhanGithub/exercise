@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>cats</title>
+    <style>
+        *{margin: 0px;padding: 0px;}
+        html{overflow-x: hidden;}
+       </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+
+    <script type="text/javascript">
+        var cats=function(){
+            var canvas = document.getElementById("canvas"),
+                contex = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerWidth;
+
+            function Cats(vx,vy){
+
+                this.colors={
+                    face:"#fff",
+                    clothes:"#0087c7",
+                    eyes:"#da251a",
+                    nose:"#d8251e",
+                    tongue:"#e67817",
+                    line:"#141213",
+                    mouth:"#da251c"
+                };
+                this.vx=vx;
+                this.vy=vy;
+                this.draw();
+
+            }
+            Cats.prototype.draw=function(){
+
+                //蓝色轮廓
+                contex.beginPath();
+                contex.lineWidth=2;
+                contex.fillStyle=this.colors.clothes;
+                contex.strokeStyle=this.colors.line;
+                contex.beginPath();
+                contex.moveTo(5+this.vx,120+this.vy);
+                contex.bezierCurveTo(5+this.vx,270+this.vy,255+this.vx,270+this.vy,255+this.vx,120+this.vy);
+                contex.moveTo(5+this.vx,120+this.vy);
+                contex.bezierCurveTo(5+this.vx,-30+this.vy,255+this.vx,-30+this.vy,255+this.vx,120+this.vy);
+                contex.fill();
+                contex.stroke();
+                //白色轮廓
+                contex.beginPath();
+                contex.lineWidth=2;
+                contex.fillStyle=this.colors.face;
+                contex.strokeStyle=this.colors.line;
+                contex.moveTo(21+this.vx,139+this.vy);
+                contex.bezierCurveTo(21+this.vx,262+this.vy,237+this.vx,262+this.vy,237+this.vx,139+this.vy);
+                contex.moveTo(21+this.vx,139+this.vy);
+                contex.bezierCurveTo(21+this.vx,16+this.vy,237+this.vx,16+this.vy,237+this.vx,139+this.vy);
+                contex.fill();
+                contex.stroke();
+                //眼睛
+                contex.beginPath();
+                contex.lineWidth=2;
+                contex.fillStyle=this.colors.face;
+                contex.strokeStyle=this.colors.line;
+                contex.arc(103+this.vx,46+this.vy,22,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                contex.beginPath();
+                contex.arc(155+this.vx,47+this.vy,22,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                contex.beginPath();
+                contex.fillStyle="#231e1b";
+                contex.arc(147+this.vx,47+this.vy,6,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                contex.beginPath();
+                contex.fillStyle="#231e1b";
+                contex.arc(111+this.vx,47+this.vy,6,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                contex.beginPath();
+                contex.fillStyle="#fff";
+                contex.arc(145+this.vx,47+this.vy,2,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                contex.beginPath();
+                contex.fillStyle="#fff";
+                contex.arc(113+this.vx,47+this.vy,2,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                //鼻子
+                contex.beginPath();
+                contex.fillStyle=this.colors.nose;
+                contex.strokeStyle=this.colors.line;
+                contex.arc(129+this.vx,73+this.vy,14,0,2*Math.PI,false);
+                contex.fill();
+                contex.stroke();
+
+                //嘴巴
+                contex.beginPath();
+                contex.fillStyle=this.colors.mouth;
+                contex.strokeStyle=this.colors.line;
+                contex.moveTo(200+this.vx,120+this.vy);
+                contex.lineTo(60+this.vx,120+this.vy);
+                contex.quadraticCurveTo(40+this.vx,200+this.vy,130+this.vx,200+this.vy);
+                contex.moveTo(200+this.vx,120+this.vy);
+                contex.quadraticCurveTo(220+this.vx,200+this.vy,130+this.vx,200+this.vy);
+                contex.stroke();
+                contex.fill();
+
+                contex.beginPath();
+                contex.fillStyle=this.colors.face;
+                contex.moveTo(57+this.vx,98+this.vy);
+                contex.bezierCurveTo(1+this.vx,138+this.vy,261+this.vx,138+this.vy,201+this.vx,98+this.vy);
+                contex.fill();
+                contex.stroke();
+
+                contex.moveTo(129+this.vx,87+this.vy);
+                contex.lineTo(129+this.vx,127+this.vy);
+                contex.stroke();
+
+                //胡子
+                contex.beginPath();
+                contex.moveTo(100+this.vx,95+this.vy);
+                contex.lineTo(20+this.vx,88+this.vy);
+
+                contex.moveTo(98+this.vx,105+this.vy);
+                contex.lineTo(18+this.vx,105+this.vy);
+
+                contex.moveTo(100+this.vx,115+this.vy);
+                contex.lineTo(20+this.vx,127+this.vy);
+
+                contex.moveTo(170+this.vx,95+this.vy);
+                contex.lineTo(250+this.vx,88+this.vy);
+
+                contex.moveTo(172+this.vx,105+this.vy);
+                contex.lineTo(248+this.vx,105+this.vy);
+
+                contex.moveTo(170+this.vx,115+this.vy);
+                contex.lineTo(250+this.vx,127+this.vy);
+
+                contex.stroke();
+
+                contex.beginPath();
+                contex.fillStyle=this.colors.tongue;
+
+                contex.moveTo(100+this.vx,170+this.vy);
+                contex.quadraticCurveTo(115+this.vx,155+this.vy,130+this.vx,170+this.vy);
+                contex.moveTo(130+this.vx,170+this.vy);
+                contex.quadraticCurveTo(145+this.vx,155+this.vy,160+this.vx,170+this.vy);
+
+                contex.moveTo(100+this.vx,170+this.vy);
+                contex.bezierCurveTo(100+this.vx,195+this.vy,180+this.vx,195+this.vy,160+this.vx,170+this.vy);
+                contex.stroke();
+                contex.fill();
+            }
+
+            function getRandom(a , b){
+                return Math.random()*(b-a)+a;
+            }
+
+            window.requestAnimFrame = (function (callback) {
+                return window.requestAnimationFrame ||
+                        window.webkitRequestAnimationFrame ||
+                        window.mozRequestAnimationFrame ||
+                        window.oRequestAnimationFrame ||
+                        window.msRequestAnimationFrame ||
+                        function (callback) {
+                            window.setTimeout(callback, 1000 / 60);
+                        };
+            })();
+
+            var Game={
+                init:function(){
+                    this.drawlines();
+                    this.drawCats();
+                },
+                drawlines:function() {
+                    var self=this;
+                    var hcolor = vcolor = undefined;
+                    for (var i = 0, j = 0; i <= canvas.width, j <= canvas.height; i += 75, j += 75) {
+                        if (i / 75 % 2) {
+                            vcolor = "#e4c1bf";
+                        } else {
+                            vcolor = "#abdbf2";
+                        }
+                        if (j / 75 % 2) {
+                            hcolor = "#aadbbe";
+                        } else {
+                            hcolor = "#fefea8";
+                        }
+                        self.drawLine(0, i, canvas.height, i, vcolor);
+                        self.drawLine(j, 0, j, canvas.width, hcolor);
+                    }
+                },
+                drawLine:function(bx,by,ex,ey,color){
+                    contex.beginPath();
+                    contex.strokeStyle=color;
+                    contex.lineWidth=10;
+                    contex.moveTo(bx,by);
+                    contex.lineTo(ex,ey);
+                    contex.stroke();
+                },
+                drawCats:function(){
+                    var self=this;
+                    requestAnimFrame(function(){self.drawCats();});
+                    new Cats(getRandom(0,canvas.width) , getRandom(0,canvas.height));
+                }
+            }
+            return Game;
+        }();
+        cats.init();
+
+    </script>
+</body>
+</html>
