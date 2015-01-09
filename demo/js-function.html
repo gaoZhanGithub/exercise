@@ -1,0 +1,55 @@
+<script>
+    function getAllSelectors() {
+        var ret = [];
+        for (var i = 0; i < document.styleSheets.length; i++) {
+            var rules = document.styleSheets[i].rules || document.styleSheets[i].cssRules;
+            for (var x in rules) {
+                if (typeof rules[x].selectorText == 'string') ret.push(rules[x].selectorText);
+            }
+        }
+        return ret;
+    }
+
+    function selectorExists(selector) {
+        var selectors = getAllSelectors();
+        for (var i = 0; i < selectors.length; i++) {
+            if (selectors[i] == selector) return true;
+        }
+        return false;
+    }
+
+    //调用方式
+    selectorExists('.class');
+    selectorExists('#id');
+</script>
+<script type="text/javascript">
+    //检测是否有动画属性
+    var hasAnimationProperty = function (className) {
+        var animateProprtys = [
+            //有什么判断的便新增，暂时只判断animation，不同的动画特性，判断方式不一致
+            //        $.fx.cssPrefix + 'transition',
+                    $.fx.cssPrefix + 'animation-name'
+        ];
+        var el = $('<div></div>');
+        $('body').append(el);
+
+        var i, len;
+
+        //赋予其class
+        el.attr('class', className);
+
+        for (i = 0, len = animateProprtys.length; i < len; i++) {
+            if (el.css(animateProprtys[i]) != 'none') return true;
+        }
+        s = '';
+        return false;
+    };
+
+    //false
+    console.log(hasAnimationProperty('test'));
+    //true
+    console.log(hasAnimationProperty('cm-up-out'));
+    //true
+    console.log(hasAnimationProperty('cm-up-in'));
+
+</script>

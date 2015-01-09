@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>简单模拟animation</title>
+    <style>
+        .demo{
+            width:100px;
+            height:100px;
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+<div class="demo"></div>
+<div id="msg"></div>
+<script type="text/javascript" src="../source/zepto.js"></script>
+<script type="text/javascript" src="../source/zepto-animate.js"></script>
+<script type="text/javascript" src="../source/zepto-event.js"></script>
+
+<script>
+    (function($){
+        var demo = $('.demo');
+        var msg = $('#msg');
+
+        var fn = function () {
+            msg.html('事件回调，当前原始宽度：' + demo.width());
+        }
+        demo.on('mouseenter', function () {
+            demo.animate({ 'width': '300px' }, 3000, 'ease-out', fn);
+        });
+
+        demo.on('mouseleave', function () {
+            demo.animate({ 'width': '500px' }, 2000, 'ease-out', fn);
+        });
+    })(Zepto);
+
+</script>
+</body>
+</html>
