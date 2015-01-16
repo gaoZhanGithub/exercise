@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>3D图片走廊</title>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="format-detection" content="email=no"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"/>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+        }
+        body{
+            background-color: #000;;
+        }
+        .dg-container{
+            width:300px;
+            height:300px;
+            overflow: hidden;
+            margin: 100px auto;
+        }
+        ul{
+            position: relative;
+            transition:all 0.3ms ease-in;
+            width: 1800px;
+            height: 300px;
+        }
+        li{
+            width: 300px;
+            height: 300px;
+            background-color: orange;
+            float: left;
+            background-color: red;
+
+        }
+        li:nth-child(2){
+            background-color: orange;
+        }
+        li:nth-child(3){
+            background-color:lightseagreen;
+        }
+        li:nth-child(4){
+            background-color:orangered;
+        }
+        li:nth-child(5){
+            background-color:coral;
+        }
+        li:nth-child(6){
+            background-color:forestgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="dg-container" id="container1">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="https://a.alipayobjects.com/jquery/jquery/1.11.1/jquery.js"></script>
+<script>
+    (function($){
+        var startX,moveX,endX,offsetX,current=0;
+
+        var hasTouch = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);
+        var startEvt = hasTouch ? 'touchstart' : 'mousedown';
+        var moveEvt = hasTouch ? 'touchmove' : 'mousemove';
+        var endEvt = hasTouch ? 'touchend' : 'mouseup';
+
+        var startHandler = function(event) {
+            event.preventDefault();
+            startX=event.originalEvent.targetTouches[0].pageX;
+        }
+        var moveHandler = function(event) {
+            moveX=event.originalEvent.targetTouches[0].pageX;
+            offsetX=moveX-startX;
+            $("ul").css({"transition":"all 0s","transform":"translateX("+(offsetX-current*300)+"px)"});
+        }
+        var endHandler = function(evt) {
+            if(Math.abs(offsetX)>=50){
+                if(offsetX<0){
+                    if(current<5){
+                        ++current;
+                    }
+                }else{
+                    if(current>0){
+                        --current;
+                    }
+                }
+            }
+            endX=-current*300;
+            $("ul").css({"transition":"all 0.5s","transform":"translateX("+endX+"px)"});
+        }
+        $("body").on(startEvt,startHandler)
+        .on(moveEvt,moveHandler)
+        .on(endEvt,endHandler);
+    })(jQuery);
+
+</script>
+</body>
+</html>

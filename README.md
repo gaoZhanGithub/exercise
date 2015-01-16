@@ -1,4 +1,3 @@
-# exercise
 ## demo online
 * 旋转的双环:http://jsbin.com/qagejiwupe/1/edit?html,js,output
 ** step1:http://jsbin.com/jurojutiro/1/edit?html,js,output

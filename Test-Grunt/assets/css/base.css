@@ -1,6 +1,10 @@
 .jp-pagination {
     text-align: left;
 }
+.jp-pagination{
+    background-color: #fff;
+
+}
 
 .jp-pagination, .jp-pagination input {
     color: gray;
@@ -114,4 +118,5 @@
 
 .jp-hidden {
     display: none;
+    opacity:0;
 }

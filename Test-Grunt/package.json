@@ -1,0 +1,15 @@
+{
+    "name": "SampleGrunt",
+    "version": "0.0.1",
+    "description":"",
+    "devDependencies":{
+        "grunt" :                       "~0.4.5",
+        "grunt-contrib-cssmin":         "*",
+        "grunt-contrib-sass":           "*",
+        "grunt-contrib-uglify":         "*",
+        "grunt-contrib-watch":          "*",
+        "grunt-cssc":                   "*",
+        "grunt-htmlhint":               "*",
+        "matchdep":                     "*"
+    }
+}
