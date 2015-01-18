@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>本地存储数据库</title>
+</head>
+<body>
+    <script type="text/javascript">
+        // openDatabase 打开一个数据库，如果不存在则创建
+        // 参数分别代表 名称 版本 描述 大小 回调函数
+        var dataBase=openDatabase("student","1.0","学生表",1024*1024,function(){});
+        if(!dataBase){
+            alert("数据库创建失败");
+        }else{
+            alert("数据库创建成功");
+        }
+
+        function createTable(){
+            dataBase.transaction(function(tx){
+                tx.executeSql(
+                        "create table if not exists stu (id REAL UNIQUE,name TEXT)",
+                        [],
+                        function(tx,result){},
+                        function(tx,error){alert("创建表stu失败："+error.message);}
+                );
+            })
+        }
+        function insert (id,name) {
+            dataBase.transaction(function (tx) {
+                tx.executeSql(
+                        "insert  into  stu (id, name) values(?, ?)",
+                        [id,name],
+                        function () {
+                            console.log(result);
+                            alert('添加数据成功');
+                        },
+                        function (tx, error) {
+                            alert('添加数据失败: ' + error.message);
+                        });
+            });
+        }
+        function query(){
+            dataBase.transaction(function (tx) {
+                tx.executeSql(
+                        "select  *  from  stu", [],
+                        function (tx, result) {
+                            //获取某一行某一列的值
+                            console.log(result.rows[i].item["name"]);
+                        },
+                        function (tx, error) {
+                            alert('查询失败: ' + error.message);
+                        } );
+            });
+        }
+        function update(id,name){
+            dataBase.transaction(function(tx){
+                tx.executeSql(
+                        "update stu set name = ? where id=?",
+                        [name,id],
+                        function(tx,result){},
+                        function(tx,error){alert("更新失败："+error.message);}
+                );
+            });
+        }
+        function del(id){
+            dataBase.transaction(function(tx){
+                tx.executeSql(
+                        "delete from stu where id =?",
+                        [id],
+                        function(tx,result){},
+                        function(tx,error){}
+                );
+            });
+        }
+        function dropTable(){
+            dataBase.transaction(function(tx){
+                tx.executeSql(
+                        "drop table stu"
+                );
+            });
+
+        }
+
+    </script>
+</body>
+</html>

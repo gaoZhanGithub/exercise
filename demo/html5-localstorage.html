@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>localStorage</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //永久存在 除非给删除了
+        if(window.localStorage){
+            eventBind();
+        }else{
+            alert("当前浏览器不支持localStorage");
+        }
+//        localStorage.a="a";
+//        localStorage["a"]="a";
+//        localStorage.setItem("a","a");
+//        var a=localStorage.a;
+//        var a=localStorage["a"];
+//        var a=localStorage.getItem("a");
+//        localStorage.removeItem("a");
+//        localStorage.clear("/一次性清除所有键值对/");
+//        localStorage.key(1);
+        function eventBind(){
+            //检测键值对的变化
+            if(window.addEventListener){
+                window.addEventListener("storage",handle_storage,false);
+            }else if(window.attachEvent){
+                window.attachEvent("onstorage",handle_storage);
+            }
+            function handle_storage(e){
+                if(!e){e=window.event;}
+                showStorage();
+            }
+        }
+        function showStorage(){
+            var storage = window.localStorage;
+            if (!storage.getItem("pageLoadCount")) storage.setItem("pageLoadCount",0);
+            storage.pageLoadCount = parseInt(storage.getItem("pageLoadCount")) + 1;//必须格式转换
+            console.log(storage.pageLoadCount);
+        }
+    </script>
+</body>
+</html>
