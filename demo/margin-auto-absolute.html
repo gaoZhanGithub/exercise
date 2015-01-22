@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>css 垂直水平居中</title>
+    <style>
+        .div1{
+            width:600px;
+            height:600px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin:-300px 0px 0px -300px;
+            background-color: orange;
+
+            color: #fff;
+            text-align: center;
+            line-height: 600px;
+        }
+        .div2{
+            width:500px;
+            height:500px;
+            position: absolute;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            background-color: red;
+        }
+        .div3{
+            width:400px;
+            height: 400px;
+            background-color: #fff;
+            position: absolute;
+            left:0;
+            right:0;
+            top:0;
+            bottom: 0;
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1">高度已知</div>
+    <div class="div2">高度未知</div>
+    <div class="div3">高度未知 ie8+</div>
+</body>
+</html>
+
+    

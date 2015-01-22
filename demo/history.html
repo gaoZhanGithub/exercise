@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style type="text/css">
+        div {
+            margin: 10px;
+        }
+
+        .msgBtn {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid currentColor;
+        }
+        span:hover{color:red;}
+    </style>
+</head>
+<body>
+<div id="msg">
+    消息框
+</div>
+<br><br>
+<span class="msgBtn">去第一页</span> <span class="msgBtn">去第二页</span> <span class="msgBtn">去第三页</span>
+<script type="text/javascript" src="../source/jquery.min.js"></script>
+<script type="text/javascript">
+    var _loc = location.href;
+
+    function showMsg(el, msg) {
+        el.html(msg);
+    }
+
+    window.addEventListener('popstate', function (e) {
+        console.log(e.state);
+        if (!e.state) return;
+        showMsg($('#msg'), e.state);
+    });
+
+    $('.msgBtn').click(function (e) {
+        var msg = $(e.target).html();
+        showMsg($('#msg'), msg);
+        history.pushState(msg, msg, _loc + '/' + msg);
+    });
+
+</script>
+</body>
+</html>
