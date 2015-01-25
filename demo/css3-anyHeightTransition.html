@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>高度不确定的动画效果</title>
+    <style>
+        .box { width: 400px; padding: 20px; border: 40px solid #a0b3d6; background-color: #eee; overflow: hidden; }
+        .in { width: 100px; margin: 0 auto;  border: 50px solid #beceeb; background-color: #f0f3f9; }
+        [type=button] { width: 100px; height: 32px; font-size: 100%; }
+    </style>
+    <style>
+        .load1 .loader,
+        .load1 .loader:before,
+        .load1 .loader:after {
+            background: #FFF;
+            -webkit-animation: load1 1s infinite ease-in-out;
+            animation: load1 1s infinite ease-in-out;
+            width: 1em;
+            height: 4em;
+        }
+        .load1 .loader:before,
+        .load1 .loader:after {
+            position: absolute;
+            top: 0;
+            content: '';
+        }
+        .load1 .loader:before {
+            left: -1.5em;
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+        .load1 .loader {
+            text-indent: -9999em;
+            margin: 8em auto;
+            position: relative;
+            font-size: 11px;
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+        .load1 .loader:after {
+            left: 1.5em;
+        }
+        @-webkit-keyframes load1 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 0 #FFF;
+                height: 4em;
+            }
+            40% {
+                box-shadow: 0 -2em #ffffff;
+                height: 5em;
+            }
+        }
+        @keyframes load1 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 0 #FFF;
+                height: 4em;
+            }
+            40% {
+                box-shadow: 0 -2em #ffffff;
+                height: 5em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="box" class="box" style="height: 426px; transition: height 250ms; -webkit-transition: height 250ms;">
+    <div class="in" style="height:326px;"></div>
+</div>
+<p>
+    <input type="button" id="button" value="点击我">
+</p>
+<script>
+    // 高度无缝动画方法
+    var funTransitionHeight = function(element, time) { // time, 数值，可缺省
+        if (typeof window.getComputedStyle == "undefined") return;
+
+        var height = window.getComputedStyle(element).height;
+        element.style.height = "auto";
+        var targetHeight = window.getComputedStyle(element).height;
+        element.style.height = height;
+        setTimeout(function() {
+            if (time) element.style.transition = "height "+ time +"ms";
+            element.style.height = targetHeight;
+        }, 15);
+    };
+
+    (function() {
+        // demo演示脚本
+        var box = document.getElementById("box"), button = document.getElementById("button");
+        button.onclick = function() {
+            // 载入菊花，模拟loading效果
+            box.innerHTML = '<div class="load1"><div class="loader">Loading...</div></div>';
+            // 随机高度内容
+            setTimeout(function() {
+                box.innerHTML = '<div class="in" style="height:'+ Math.round(400 * Math.random()) +'px;"></div>';
+                funTransitionHeight(box, 252);
+            }, 1000);
+        };
+
+        // 初始高度
+        funTransitionHeight(box);
+    })();
+</script>
+</body>
+
+</html>
